@@ -12,12 +12,12 @@
     </parent>
 
     <groupId>pub.module</groupId>
-    <artifactId>mq-rpc-event</artifactId>
+    <artifactId>spring-boot-rpc</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <name>tg-rpc-event</name>
-    <description>TG 模块化通信栈：MQ RPC（@RpcApi）+ MQ Event（@MqChannel）</description>
-    <url>https://github.com/modulepub/mq-rpc-event</url>
+    <description>TG 模块化通信栈</description>
+    <url>https://github.com/modulepub/spring-boot-rpc</url>
 
     <licenses>
         <license>
@@ -38,9 +38,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/modulepub/mq-rpc-event.git</connection>
-        <developerConnection>scm:git:ssh://github.com/modulepub/mq-rpc-event.git</developerConnection>
-        <url>https://github.com/modulepub/mq-rpc-event</url>
+        <connection>scm:git:git://github.com/modulepub/spring-boot-rpc.git</connection>
+        <developerConnection>scm:git:ssh://github.com/modulepub/spring-boot-rpc.git</developerConnection>
+        <url>https://github.com/modulepub/spring-boot-rpc</url>
         <tag>v${revision}</tag>
     </scm>
 
@@ -49,8 +49,6 @@
         <module>spring-boot-starter-rpc-mq-biz</module>
         <module>spring-boot-starter-event-spi</module>
         <module>spring-boot-starter-event-mq-biz</module>
-        <module>spring-boot-starter-mq-rpc</module>
-        <module>spring-boot-starter-mq-event</module>
     </modules>
 
     <properties>
@@ -106,16 +104,6 @@
             <dependency>
                 <groupId>pub.module</groupId>
                 <artifactId>spring-boot-starter-event-mq-biz</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>pub.module</groupId>
-                <artifactId>spring-boot-starter-mq-rpc</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>pub.module</groupId>
-                <artifactId>spring-boot-starter-mq-event</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

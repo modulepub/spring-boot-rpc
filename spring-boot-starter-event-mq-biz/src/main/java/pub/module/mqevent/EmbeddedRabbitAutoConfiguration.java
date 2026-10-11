@@ -15,7 +15,7 @@ import org.springframework.core.env.Environment;
 
 /**
  * 未配置外部 RabbitMQ broker 时，自动启用进程内 Mock AMQP（供 Spring Cloud Stream 等使用）。
- * <p>ModuleRpc 场景由 {@code spring-boot-starter-mq-rpc} 的嵌入式配置优先处理。</p>
+ * <p>ModuleRpc 场景由 {@code spring-boot-starter-rpc-mq-biz} 的嵌入式配置优先处理。</p>
  */
 @Slf4j
 @AutoConfiguration(before = RabbitAutoConfiguration.class)

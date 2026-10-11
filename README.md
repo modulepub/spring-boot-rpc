@@ -8,8 +8,6 @@ TG 模块化通信栈：基于 RabbitMQ 的 **同步 RPC**（`@RpcApi`）与 **�
 | RPC MQ 实现 | `spring-boot-starter-rpc-mq-biz` | Rabbit Request-Reply、分布式事务、嵌入式 Broker |
 | Event 契约 | `spring-boot-starter-event-spi` | `@MqChannel`、`MqPublisher` 等 |
 | Event MQ 实现 | `spring-boot-starter-event-mq-biz` | Spring Cloud Stream + Rabbit 自动配置 |
-| 兼容聚合 RPC | `spring-boot-starter-mq-rpc` | = `rpc-spi` + `rpc-mq-biz` |
-| 兼容聚合 Event | `spring-boot-starter-mq-event` | = `event-spi` + `event-mq-biz` |
 
 ## 版本与 Spring Boot 对齐
 
@@ -38,7 +36,7 @@ TG 模块化通信栈：基于 RabbitMQ 的 **同步 RPC**（`@RpcApi`）与 **�
 ### 引入依赖
 
 ```xml
-<!-- 同步 RPC（推荐显式 spi + biz；或继续用聚合 mq-rpc） -->
+<!-- 同步 RPC -->
 <dependency>
     <groupId>pub.module</groupId>
     <artifactId>spring-boot-starter-rpc-spi</artifactId>
@@ -304,10 +302,10 @@ mvn clean install
 
 ### 2. 执行发布
 
-```powershell
-$env:SONATYPE_USERNAME = "<token-username>"
-$env:SONATYPE_PASSWORD = "<token-password>"
-.\scripts\publish-central.ps1
+在 `~/.m2/settings.xml` 中为 server id `central` 配置 Sonatype User Token，然后执行：
+
+```bash
+mvn clean deploy -Prelease -DskipTests
 ```
 
 GPG 公钥已上传至 `keys.openpgp.org`（Key ID: `944B0799D96DE669`）。
@@ -391,13 +389,13 @@ pub.module.system.api.service.ApiSysUserService  →  module = system
 
 ### 修改本仓库后，业务项目为何「重启不生效」？
 
-`spring-boot-starter-mq-rpc` 以 Maven 依赖形式打入业务 fat jar。仅 IDE 热重启往往仍使用旧的本地仓库 JAR。
+这些 starter 以 Maven 依赖形式打入业务 fat jar。仅 IDE 热重启往往仍使用旧的本地仓库 JAR。
 
 正确流程：
 
 ```bash
 # 1. 安装到本地仓库
-mvn -f mq-rpc-event/pom.xml clean install -DskipTests
+mvn clean install -DskipTests
 
 # 2. 重新打包业务应用（如 tg-boot runner）
 mvn -f tg-boot/pom.xml -pl spring-boot-starter-module/spring-boot-starter-runner -am clean package -DskipTests
@@ -424,7 +422,7 @@ RPC tx admin API registered at /pub/tg-rpc-tx/api
 
 ## 同步传输演进（设计中）
 
-将 `@RpcApi` 的远端介质从 MQ Request-Reply 换成 **按 Java 方法注册的 gRPC**（业务注解与用例不变，事件轨 `@MqChannel` 仍走本仓库 mq-event）的实施设计见：
+将 `@RpcApi` 的远端介质从 MQ Request-Reply 换成 **按 Java 方法注册的 gRPC**（业务注解与用例不变，事件轨 `@MqChannel` 仍走本仓库 event 模块）的实施设计见：
 
 [tg-boot/docs/architecture/04-grpc-rpc.md](../tg-boot/docs/architecture/04-grpc-rpc.md)
 
